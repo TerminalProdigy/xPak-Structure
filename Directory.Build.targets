@@ -1,0 +1,27 @@
+<!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022 -->
+<Project>
+  <!-- Log build macros -->
+  <Target Name="LogMacros" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Debug'">
+    <!-- https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2022 -->
+    <Message Text="--- Logging MSBuild Macros ---" Importance="high" />
+    <Message Text="Project Name: $(MSBuildProjectName)" Importance="high" />
+    <Message Text="Project Extension: $(MSBuildProjectExtension)" Importance="high" />
+    <Message Text="Project File: $(MSBuildProjectFile)" Importance="high" />
+    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" />
+    <Message Text="MSBuildProjectFullPath: $(MSBuildProjectFullPath)" Importance="high" />
+    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" />
+    <Message Text="Configuration: $(Configuration)" Importance="high" />
+    <Message Text="OutputPath: $(OutputPath)" Importance="high" />
+    <Message Text="TargetFileName: $(TargetFileName)" Importance="high" />
+    <Message Text="TargetDir: $(TargetDir)" Importance="high" />
+    <Message Text="SolutionDir: $(SolutionDir)" Importance="high" />
+    <Message Text="Platform: $(Platform)" Importance="high" />
+    <Message Text="TargetFramework: $(TargetFramework)" Importance="high" />
+    <Message Text="MSBuildThisFileName: $(MSBuildThisFileName)" Importance="high" />
+    <Message Text="MSBuildThisFileExtension: $(MSBuildThisFileExtension)" Importance="high" />
+    <Message Text="MSBuildThisFile: $(MSBuildThisFile)" Importance="high" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" />
+    <Message Text="MSBuildThisFileFullPath: $(MSBuildThisFileFullPath)" Importance="high" />
+    <Message Text="--- End Macro Log ---" Importance="high" />
+  </Target>
+</Project>
