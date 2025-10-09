@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Sub-repo folders
+src/Optional\ Modules/src
+src/Required\ Modules/src
+src/Suite/src
+
 # User-specific files
 *.rsuser
 *.suo
