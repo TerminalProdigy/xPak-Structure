@@ -24,4 +24,34 @@
     <Message Text="MSBuildThisFileFullPath: $(MSBuildThisFileFullPath)" Importance="high" />
     <Message Text="--- End Macro Log ---" Importance="high" />
   </Target>
+
+  <!-- GitVersion integration - Update the AssemblyInfo.cs -->
+  <!-- GenerateAssemblyInfo must be set to false in the PropertyGroup "<GenerateAssemblyInfo>false</GenerateAssemblyInfo>" -->
+  <Target
+    Name="Update-AssemblyInfo"
+    BeforeTargets="PreBuildEvent"
+    Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'netstandard2.0' Or $(TargetFramework.StartsWith('net8.'))">
+      <Message Text="Ensuring GitVersion is installed." Importance="high" />
+      <Exec Command='powershell -ExecutionPolicy Bypass -File "$(MSBuildThisFileDirectory).Scripts\Build Scripts\1-Pre-build\Invoke-DotNetToolAction.ps1" -ToolName "GitVersion.Tool" -Action "Install" -SolutionDir "$(SolutionDir)' />
+      <Message Text="Updating: $(AssemblyInfoFileDisplay)" Importance="high" />
+      <!-- Should be dotnet-gitversion if global, otherwise dotnet dotnet-gitversion. -->
+      <Exec Command='dotnet dotnet-gitversion /config "$(MSBuildThisFileDirectory)gitversion.yml" /updateassemblyinfo $(AssemblyInfoFile) /ensureassemblyinfo' />
+      <PropertyGroup>
+        <GitVersionActive>true</GitVersionActive>
+      </PropertyGroup>
+  </Target>
+
+  <!-- Read assembly information -->
+  <Target
+    Name="ExtractVersionAfterBuild"
+    AfterTargets="PostBuildEvent"
+    Condition="'$(GitVersionActive)' == 'true'">
+      <GetAssemblyIdentity AssemblyFiles="$(OutputPath)$(AssemblyName).dll">
+        <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+      </GetAssemblyIdentity>
+      <PropertyGroup>
+        <Version>%(AssemblyInfo.Version)</Version>
+      </PropertyGroup>
+      <Message Text="Version: $(Version)" Importance="high" />
+  </Target>
 </Project>

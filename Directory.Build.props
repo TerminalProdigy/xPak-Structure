@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyInfoFile>Properties\AssemblyInfo.cs</AssemblyInfoFile>
+    <AssemblyInfoFileDisplay>$(MSBuildProjectDirectory)\$(AssemblyInfoFile)</AssemblyInfoFileDisplay>
+    <GitVersionActive>false</GitVersionActive>
+  </PropertyGroup>
+</Project>
